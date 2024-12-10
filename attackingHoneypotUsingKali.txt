@@ -1,0 +1,39 @@
+sudo apt update && sudo apt upgrade -y
+
+
+sudo apt install git python3 python3-venv python3-dev build-essential libssl-dev libffi-dev -y
+
+git clone https://github.com/cowrie/cowrie.git
+cd cowrie
+
+python3 -m venv cowrie-env
+source cowrie-env/bin/activate
+
+pip install --upgrade pip
+pip install -r requirements.txt
+
+cp etc/cowrie.cfg.dist etc/cowrie.cfg
+nano etc/cowrie.cfg
+
+source cowrie-env/bin/activate
+bin/cowrie start
+tail -f var/log/cowrie/cowrie.log
+bin/cowrie stop
+
+
+#Kali Linx:
+wget https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt -O /usr/share/wordlists/rockyou.txt
+
+Msfconsole
+
+use auxiliary/scanner/ssh/ssh_login
+set RHOSTS <honeypot-IP>
+set RPORT 2222
+set USERNAME root
+set VERBOSE true
+set USER_FILE /path/to/user_list.txt
+set PASS_FILE /usr/share/wordlists/rockyou.txt
+
+
+run
+
